@@ -1,7 +1,7 @@
 <!-- src/App.vue -->
 <template>
   <div id="app">
-    <h1>Hello, Vue!</h1>
+    <h1>Hello, Vue 4!</h1>
   </div>
 </template>
 

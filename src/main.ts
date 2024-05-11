@@ -18,13 +18,18 @@ function createWindow() {
 
   // Load the index.html of the app.
   // mainWindow.loadURL('http://localhost:3000'); // Adjust the port if needed for your setup
-
-// Construct the URL for the index.html file.
-  const startUrl = url.format({
+  console.log("Changed!")
+  // Construct the URL for the index.html file.
+  let startUrl = url.format({
       pathname: path.join(__dirname, 'renderer/src/index.html'), // Adjust if your file is in a subdirectory within the asar
       protocol: 'file:',
       slashes: true
   });
+
+  if(process.env.BKS_ENV === 'development') {
+    startUrl = 'http://localhost:3000/src/index.html'
+  }
+
   console.log("opening file", startUrl)
   mainWindow.loadURL(startUrl)
 
@@ -32,6 +37,7 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
 }
 
 // This method will be called when Electron has finished
