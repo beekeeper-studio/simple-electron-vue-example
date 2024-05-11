@@ -6,8 +6,16 @@ module.exports = {
   },
   files: [
     'dist/**/*', // Include all files from the dist directory
-    'package.json'
+    'package.json',
+    // '!node_modules/**/*.node'
   ],
+  // extraResources: [
+  //   {
+  //     from: 'node_modules/better-sqlite3',
+  //     to: 'node_modules/better-sqlite3',
+  //     filter: ["**/*.node"]
+  //   }
+  // ],
   asar: true, // Pack all files into an ASAR archive for better performance and to protect source codes
   win: {
     target: 'nsis', // Target packaging format for Windows

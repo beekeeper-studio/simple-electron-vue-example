@@ -2,10 +2,15 @@
 import { app, BrowserWindow } from 'electron';
 import url from 'url'
 import path from 'path'
+import sqlite from 'better-sqlite3'
+
+import rawLog from 'electron-log'
+
+const log = rawLog.scope('main')
 // Declare a variable to hold the window object to avoid garbage collection
 let mainWindow: BrowserWindow | null;
 
-function createWindow() {
+async function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -16,9 +21,14 @@ function createWindow() {
     }
   });
 
+  const db = sqlite('dev.db')
+  db.exec('create table IF NOT EXISTS example(name varchar, message varchar)')
+  db.prepare("insert into example(name, message) values ( 'day', 'hello from matthew')").run()
+  const rows = db.prepare('select * from example').get()
+  log.info("Received some data!", rows)
   // Load the index.html of the app.
   // mainWindow.loadURL('http://localhost:3000'); // Adjust the port if needed for your setup
-  console.log("Changed!")
+  log.info("Beep boop, I've started")
   // Construct the URL for the index.html file.
   let startUrl = url.format({
       pathname: path.join(__dirname, 'renderer/src/index.html'), // Adjust if your file is in a subdirectory within the asar
@@ -51,8 +61,8 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('activate', () => {
+app.on('activate', async () => {
   if (mainWindow === null) {
-    createWindow();
+    await createWindow();
   }
 });
