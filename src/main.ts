@@ -3,8 +3,8 @@ import { app, BrowserWindow } from 'electron';
 import url from 'url'
 import path from 'path'
 import sqlite from 'better-sqlite3'
-
 import rawLog from 'electron-log'
+
 
 const log = rawLog.scope('main')
 // Declare a variable to hold the window object to avoid garbage collection
@@ -29,6 +29,7 @@ async function createWindow() {
   // Load the index.html of the app.
   // mainWindow.loadURL('http://localhost:3000'); // Adjust the port if needed for your setup
   log.info("Beep boop, I've started")
+  
   // Construct the URL for the index.html file.
   let startUrl = url.format({
       pathname: path.join(__dirname, 'renderer/src/index.html'), // Adjust if your file is in a subdirectory within the asar
